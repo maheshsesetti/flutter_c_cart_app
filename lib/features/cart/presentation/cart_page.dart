@@ -4,30 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cart_card.dart';
 
-class CartPage extends StatefulWidget {
+class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  CartBloc cartBloc = CartBloc();
-  @override
-  void initState() {
-    cartBloc.add(CartInitialEvent());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart Items"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: BlocConsumer<CartBloc, CartState>(
-          bloc: cartBloc,
           buildWhen: (previous, current) => current is! CartActionState,
           listenWhen: (previous, current) => current is CartActionState,
           builder: (context, state) {
@@ -37,7 +25,7 @@ class _CartPageState extends State<CartPage> {
                 return ListView.separated(
                     itemBuilder: (context, index) {
                       return CartCard(
-                          item: successState.cartList[index], bloc: cartBloc);
+                          item: successState.cartList[index]);
                     },
                     separatorBuilder: (context, index) {
                       return const SizedBox(
@@ -45,13 +33,17 @@ class _CartPageState extends State<CartPage> {
                       );
                     },
                     itemCount: successState.cartList.length);
-
+      
               default:
-                
             }
             return Container();
           },
-          listener: (context, state) {}),
+          listener: (context, state) {
+            if (state is CartRemoveState) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Cart Remove")));
+            }
+          }),
     );
   }
 }

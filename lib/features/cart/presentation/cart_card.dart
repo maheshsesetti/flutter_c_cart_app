@@ -1,11 +1,12 @@
 import 'package:ecart_app/domain/product_model.dart';
 import 'package:ecart_app/features/cart/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartCard extends StatelessWidget {
   final Product item;
-  final CartBloc bloc;
-  const CartCard({super.key, required this.item, required this.bloc});
+
+  const CartCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,10 @@ class CartCard extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    bloc.add(CartRemoveEvent(product: item));
+                    context
+                        .read<CartBloc>()
+                        .add(CartRemoveEvent(product: item));
+                    
                   },
                   icon: const Icon(Icons.delete),
                 ),

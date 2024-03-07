@@ -14,15 +14,15 @@ class WishListBloc extends Bloc<WishListEvent, WishListState> {
     on<WishListRemoveEvent>(wishListRemoveEvent);
   }
 
-FutureOr<void> wishListInitialEvent(WishListInitialEvent event, Emitter<WishListState> emit) {
+  FutureOr<void> wishListInitialEvent(
+      WishListInitialEvent event, Emitter<WishListState> emit) {
     emit(WishListSuccessState(wishListItem: wishList));
   }
 
   FutureOr<void> wishListRemoveEvent(
       WishListRemoveEvent event, Emitter<WishListState> emit) {
     wishList.remove(event.product);
+    emit(WishListRemoveState());
     emit(WishListSuccessState(wishListItem: wishList));
   }
-
-
 }

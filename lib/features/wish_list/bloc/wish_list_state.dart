@@ -15,3 +15,8 @@ class WishListSuccessState extends WishListState {
   final List<Product> wishListItem;
   const WishListSuccessState({required this.wishListItem});
 }
+
+
+class WishListRemoveState extends WishListActionState {
+  
+}

@@ -15,3 +15,7 @@ class CartSuccessState extends CartState {
   final List<Product> cartList;
   const CartSuccessState({required this.cartList});
 }
+
+class CartRemoveState extends CartActionState {
+  
+}

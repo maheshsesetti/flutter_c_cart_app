@@ -1,12 +1,13 @@
 import 'package:ecart_app/features/wish_list/bloc/wish_list_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/product_model.dart';
 
 class WishListCart extends StatelessWidget {
   final Product item;
-  final WishListBloc bloc;
-  const WishListCart({super.key, required this.item, required this.bloc});
+
+  const WishListCart({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,9 @@ class WishListCart extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    bloc.add(WishListRemoveEvent(product: item));
+                    context
+                        .read<WishListBloc>()
+                        .add(WishListRemoveEvent(product: item));
                   },
                   icon: const Icon(Icons.delete),
                 )

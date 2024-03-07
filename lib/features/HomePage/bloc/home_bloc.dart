@@ -25,8 +25,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       InitialEvent event, Emitter<HomeState> emit) async {
     debugPrint("Initial Event is Called");
     emit(HomeLoadingState());
-    Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
     emit(HomeSuccessState(product: ProductModel.fromJson(productJson)));
+    print("next state is calling");
   }
 
   FutureOr<void> cartNavigationEvent(
@@ -53,7 +54,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       WishListInProductEvent event, Emitter<HomeState> emit) {
     debugPrint("wishListIn product Click");
     wishList.add(event.wishListProduct);
-    print(wishList);
     emit(WishListAddedActionState());
   }
 }

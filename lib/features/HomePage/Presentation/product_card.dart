@@ -1,12 +1,12 @@
 import 'package:ecart_app/domain/product_model.dart';
 import 'package:ecart_app/features/HomePage/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductCard extends StatelessWidget {
-  final HomeBloc homeBloc;
   final Product product;
 
-  const ProductCard({super.key, required this.homeBloc, required this.product});
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +26,14 @@ class ProductCard extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    homeBloc
+                    context.read<HomeBloc>()
                         .add(WishListInProductEvent(wishListProduct: product));
                   },
                   icon: const Icon(Icons.favorite_border_rounded),
                 ),
                 IconButton(
                   onPressed: () {
-                    homeBloc.add(CartInProductEvent(cartProduct: product));
+                    context.read<HomeBloc>().add(CartInProductEvent(cartProduct: product));
                   },
                   icon: const Icon(Icons.shopping_basket_outlined),
                 )
